@@ -1,14 +1,14 @@
-import type { GetServerSideProps, NextPage } from "next";
-import Layout from "../components/landingPage/layout";
+import { GetServerSideProps } from "next";
+import Layout from "../../components/dashboard/layout";
 
-const Home: NextPage = () => {
+const Dashboard = () => {
 
   return (
     <Layout />
-  );
-};
+  )
+}
 
-export default Home;
+export default Dashboard
 
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -16,10 +16,10 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const { cookies } = ctx.req;
   const session = cookies["next-auth.session-token"];
 
-  if (session) {
+  if (!session) {
     return {
       redirect: {
-        destination: "/dashboard",
+        destination: "/",
         permanent: false,
       },
     };

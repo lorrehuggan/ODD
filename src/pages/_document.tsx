@@ -26,7 +26,7 @@ class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin='true' />
           <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100;300;400;500;900&display=swap" rel="stylesheet" />
         </Head>
-        <body className="bg-base-dark text-base-light">
+        <body className="bg-base-dark text-white">
           <Main />
           <NextScript />
         </body>

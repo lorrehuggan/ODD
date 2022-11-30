@@ -1,7 +1,9 @@
 import Head from "next/head";
 import React from "react";
 import StatusBar from "./statusBar";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { trpc } from '../../utils/trpc'
+import CompanyForm from "./companyForm";
 
 interface Props {
   children: React.ReactNode;
@@ -9,6 +11,7 @@ interface Props {
 
 const Layout = () => {
   const { data: sessionData } = useSession();
+  const companies = trpc.dashboard.getCompanies.useQuery()
   return (
     <>
       <Head>
@@ -18,6 +21,9 @@ const Layout = () => {
       </Head>
       <StatusBar />
       <Main>
+        {companies.data?.length === 0 &&
+          <CompanyForm />
+        }
       </Main>
     </>
   );

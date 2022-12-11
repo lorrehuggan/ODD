@@ -1,20 +1,15 @@
 import type { GetServerSideProps, NextPage } from "next";
+import { getSession } from "next-auth/react";
 import Layout from "../components/landingPage/layout";
 
 const Home: NextPage = () => {
-
-  return (
-    <Layout />
-  );
+  return <Layout />;
 };
 
 export default Home;
 
-
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  /* Checking if the user has a session token. If they do, it redirects them to the dashboard. */
-  const { cookies } = ctx.req;
-  const session = cookies["next-auth.session-token"];
+  const session = await getSession({ req: ctx.req });
 
   if (session) {
     return {
@@ -26,6 +21,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   return {
-    props: {},
+    props: { authenticated: false },
   };
 };

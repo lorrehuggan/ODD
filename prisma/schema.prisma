@@ -71,7 +71,7 @@ model Company {
   name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  users     User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
   userId    String
   shift     Shift[]  @relation()
 }

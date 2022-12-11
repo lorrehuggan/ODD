@@ -1,12 +1,10 @@
+import { company } from "./dashboard/company";
 import { router } from "../trpc";
 import { authRouter } from "./auth";
-import { dashboardRouter } from "./dashboard";
-import { exampleRouter } from "./example";
 
 export const appRouter = router({
-  example: exampleRouter,
   auth: authRouter,
-  dashboard: dashboardRouter
+  company,
 });
 
 // export type definition of API

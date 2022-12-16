@@ -1,3 +1,4 @@
+import { createCompanySchema } from "./../../../../utils/ZodSchema/company";
 import { z } from "zod";
 import { router, publicProcedure, protectedProcedure } from "../../trpc";
 
@@ -12,20 +13,23 @@ export const company = router({
       },
     });
   }),
+  // get all companies with shifts
+  getFirstWithShifts: protectedProcedure.query(({ ctx }) => {
+    if (!ctx.session?.user) {
+      return null;
+    }
+    return ctx.prisma.company.findFirst({
+      where: {
+        userId: ctx.session.user.id,
+      },
+      include: {
+        shifts: true,
+      },
+    });
+  }),
   // create new company
   create: protectedProcedure
-    .input(
-      z.object({
-        name: z
-          .string()
-          .min(2, {
-            message: "Company name must be at least 2 characters",
-          })
-          .max(25, {
-            message: "Company name must be at most 25 characters",
-          }),
-      })
-    )
+    .input(createCompanySchema)
     .mutation(({ ctx, input }) => {
       if (!ctx.session?.user) {
         return null;
@@ -34,6 +38,7 @@ export const company = router({
         data: {
           name: input.name,
           userId: ctx.session.user.id,
+          role: input.role,
         },
       });
     }),

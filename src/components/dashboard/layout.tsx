@@ -3,7 +3,9 @@ import React from "react";
 import StatusBar from "./statusBar";
 import { useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
-import CompanyForm from "./companyForm";
+import CreateCompanyForm from "./createCompanyForm";
+import Board from "./board";
+import AddShift from "./createShift";
 
 interface Props {
   children: React.ReactNode;
@@ -11,8 +13,7 @@ interface Props {
 
 const Layout = () => {
   const { data: sessionData } = useSession();
-  const companies = trpc.company.getAll.useQuery();
-
+  const primaryCompany = trpc.company.getFirstWithShifts.useQuery();
   return (
     <>
       <Head>
@@ -25,10 +26,13 @@ const Layout = () => {
       </Head>
       <StatusBar />
       <Main>
-        {companies.data?.length === 0 && (
-          <CompanyForm isLoading={companies.isLoading} />
+        {!primaryCompany.data && (
+          <CreateCompanyForm isLoading={primaryCompany.isLoading} />
         )}
-        {companies.data && <p>Companies</p>}
+        {primaryCompany.data && <Board isLoading={primaryCompany.isLoading} />}
+        {primaryCompany.data?.shifts.length === 0 && (
+          <AddShift companyID={primaryCompany.data.id} />
+        )}
       </Main>
     </>
   );

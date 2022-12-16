@@ -1,4 +1,3 @@
-let plugin = require("tailwindcss/plugin");
 const defaultTheme = require("tailwindcss/defaultTheme");
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -15,11 +14,12 @@ module.exports = {
         "base-dark": "#18181b",
         "base-dark-200": "#27272a",
         "base-dark-300": "#3f3f46",
+        "base-dark-400": "#737373",
         "base-light": "#fafafa",
         "base-light-200": "#f4f4f5",
         "base-light-300": "#e4e4e7",
-        error: "#f43f5e",
-        "error-dark": "#881337",
+        error: "#dc2626",
+        "error-dark": "#991b1b",
         warning: "#f97316",
         "warning-dark": "#9a3412",
         info: "#22d3ee",
@@ -27,6 +27,16 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Inter Tight", ...defaultTheme.fontFamily.sans],
+      },
+      keyframes: {
+        // opacity fade animation
+        fade: {
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
+        },
+      },
+      animation: {
+        fade: "fade 0.3s ease-in-out",
       },
     },
   },

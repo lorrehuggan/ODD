@@ -10,6 +10,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^1.0.0-beta.5",
     "@headlessui/react": "^1.7.5",
     "@heroicons/react": "^2.0.13",
     "@hookform/resolvers": "^2.9.10",
@@ -27,6 +28,7 @@
     "clsx": "^1.2.1",
     "currency.js": "^2.0.4",
     "dayjs": "^1.11.7",
+    "dinero.js": "^2.0.0-alpha.12",
     "next": "13.0.2",
     "next-auth": "^4.15.1",
     "react": "18.2.0",
@@ -38,6 +40,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "^13.4.0",
+    "@types/dinero.js": "^1.9.0",
     "@types/node": "^18.0.0",
     "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.5",

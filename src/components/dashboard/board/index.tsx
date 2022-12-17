@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
-import { trpc } from "../../../utils/trpc";
+import { trpc } from "@utils/trpc";
 import AddShift from "../createShift";
+import ShiftTable from "../shift/table";
 
 interface Props {
   isLoading: boolean;
@@ -11,11 +12,16 @@ const Board = ({ isLoading, companyId }: Props) => {
   const allShifts = trpc.shift.getAll.useQuery({ companyId });
 
   if (isLoading) return <p>Loading...</p>;
+
   return (
     <section className="pt-4">
       <AddShift companyID={companyId} />
       <div className="dashboard-container">
-        <small>{JSON.stringify(allShifts.data, null, 2)}</small>
+        <ShiftTable
+          shifts={allShifts.data}
+          isLoading={allShifts.isLoading}
+          error={allShifts.error?.message}
+        />
       </div>
     </section>
   );

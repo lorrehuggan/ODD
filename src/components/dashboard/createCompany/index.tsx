@@ -2,9 +2,9 @@ import { ArrowSmallRightIcon } from "@heroicons/react/24/outline";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { trpc } from "../../../utils/trpc";
+import { trpc } from "@utils/trpc";
 import FormInput from "./FormInput";
-import { createCompanySchema } from "../../../utils/ZodSchema/company";
+import { createCompanySchema } from "@utils/ZodSchema/company";
 
 interface Props {
   isLoading: boolean;

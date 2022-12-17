@@ -13,8 +13,8 @@ import dayjs from "dayjs";
 import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { CreateShiftSchemaType } from "../../../utils/ZodSchema/shift";
-import { trpc } from "../../../utils/trpc";
+import type { CreateShiftSchemaType } from "@utils/ZodSchema/shift";
+import { trpc } from "@utils/trpc";
 import { NumberInput } from "@mantine/core";
 import currency from "currency.js";
 
@@ -55,7 +55,6 @@ const CreateShiftForm = ({ companyID }: Props) => {
     },
   });
   const {
-    register,
     handleSubmit,
     reset,
     control,
@@ -216,7 +215,6 @@ const CreateShiftForm = ({ companyID }: Props) => {
               </div>
             </div>
           </form>
-          <pre className="text-xs">{JSON.stringify(errors, null, 2)}</pre>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

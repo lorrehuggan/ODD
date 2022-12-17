@@ -2,10 +2,9 @@ import Head from "next/head";
 import React from "react";
 import StatusBar from "./statusBar";
 import { useSession } from "next-auth/react";
-import { trpc } from "../../utils/trpc";
-import CreateCompanyForm from "./createCompanyForm";
+import { trpc } from "@utils/trpc";
+import CreateCompanyForm from "./createCompany";
 import Board from "./board";
-import AddShift from "./createShift";
 
 interface Props {
   children: React.ReactNode;
@@ -26,13 +25,9 @@ const Layout = () => {
       </Head>
       <StatusBar />
       <Main>
-        {!primaryCompany.data && (
+        {!primaryCompany.data ? (
           <CreateCompanyForm isLoading={primaryCompany.isLoading} />
-        )}
-        {/* {primaryCompany.data?.shifts.length === 0 && (
-          <AddShift companyID={primaryCompany.data.id} />
-        )} */}
-        {primaryCompany.data && (
+        ) : (
           <Board
             companyId={primaryCompany.data.id}
             isLoading={primaryCompany.isLoading}

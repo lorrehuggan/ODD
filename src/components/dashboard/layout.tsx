@@ -29,9 +29,14 @@ const Layout = () => {
         {!primaryCompany.data && (
           <CreateCompanyForm isLoading={primaryCompany.isLoading} />
         )}
-        {primaryCompany.data && <Board isLoading={primaryCompany.isLoading} />}
-        {primaryCompany.data?.shifts.length === 0 && (
+        {/* {primaryCompany.data?.shifts.length === 0 && (
           <AddShift companyID={primaryCompany.data.id} />
+        )} */}
+        {primaryCompany.data && (
+          <Board
+            companyId={primaryCompany.data.id}
+            isLoading={primaryCompany.isLoading}
+          />
         )}
       </Main>
     </>

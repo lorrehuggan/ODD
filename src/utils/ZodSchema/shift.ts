@@ -8,6 +8,8 @@ export const createShiftSchema = z.object({
   date: z.date(),
 });
 
+export type CreateShiftSchemaType = z.infer<typeof createShiftSchema>;
+
 export const updateShiftSchema = z.object({
   id: z.string(),
   name: z.string(),

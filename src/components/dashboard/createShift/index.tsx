@@ -17,17 +17,13 @@ import type { CreateShiftSchemaType } from "@utils/ZodSchema/shift";
 import { trpc } from "@utils/trpc";
 import { NumberInput } from "@mantine/core";
 import currency from "currency.js";
+import { isAfter } from "@utils/vendor/dateFn";
 
 interface Props {
   companyID: string;
 }
 
 type _CreateShiftSchemaType = Omit<CreateShiftSchemaType, "companyID">;
-
-// typed function that takes two date arguments to test if the first date is after the second date
-const isAfter = (date1: Date, date2: Date) => {
-  return dayjs(date1).isAfter(date2);
-};
 
 const CreateShift = ({ companyID }: Props) => {
   return (
@@ -44,6 +40,7 @@ const CreateShift = ({ companyID }: Props) => {
 export default CreateShift;
 
 const CreateShiftForm = ({ companyID }: Props) => {
+  const [timeError, setTimeError] = useState<string | null>(null);
   const now = new Date();
   const then = dayjs(now).subtract(8, "hours").toDate();
   const [open, setOpen] = useState(false);
@@ -52,6 +49,7 @@ const CreateShiftForm = ({ companyID }: Props) => {
   const createShift = trpc.shift.create.useMutation({
     onSuccess: () => {
       utils.shift.getAll.invalidate();
+      reset();
     },
   });
   const {
@@ -73,26 +71,40 @@ const CreateShiftForm = ({ companyID }: Props) => {
 
   const onSubmit = async (data: _CreateShiftSchemaType, e: any) => {
     e.preventDefault();
+
+    // check if start date is after end date
+    if (isAfter(data.start, data.end)) {
+      setTimeError("Start time must be before end time");
+      return;
+    }
+
     try {
       // convert earnings to cents
       const earnings = currency(data.earnings).intValue;
-      console.log(earnings);
       // create shift
       await createShift.mutateAsync({
         ...data,
         companyId: companyID,
         earnings,
       });
-
       if (!createShift.isLoading) {
         setOpen(false);
         reset();
       }
-    } catch (e: any) {}
+    } catch (e: any) {
+      console.log(e.message);
+    }
   };
 
   return (
-    <Dialog.Root open={open} onOpenChange={(e) => setOpen(e)}>
+    <Dialog.Root
+      open={open}
+      onOpenChange={(e) => {
+        setOpen(e);
+        setTimeError(null);
+        reset();
+      }}
+    >
       <Dialog.Trigger asChild>
         <button className="flex items-center">
           <PlusIcon className="h-5 w-5" />
@@ -152,6 +164,12 @@ const CreateShiftForm = ({ companyID }: Props) => {
                 />
               </div>
             </fieldset>
+            {timeError && (
+              <div className="flex items-center gap-5">
+                <div className="w-16 text-right text-sm" />
+                <small className="text-xs text-red-500">{timeError}</small>
+              </div>
+            )}
             <fieldset className="flex items-center gap-5">
               <label className="w-16 text-right text-sm" htmlFor="date">
                 Date:

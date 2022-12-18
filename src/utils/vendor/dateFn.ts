@@ -50,3 +50,8 @@ export const calculateMoneyPerHour = (start: Date, end: Date, wage: number) => {
 
   return moneyPerHour;
 };
+
+// typed function that takes two date arguments to test if the first date is after the second date
+export const isAfter = (date1: Date, date2: Date) => {
+  return dayjs(date1).isAfter(date2);
+};

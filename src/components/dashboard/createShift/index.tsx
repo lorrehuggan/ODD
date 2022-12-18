@@ -8,7 +8,7 @@ import {
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 import * as Dialog from "@radix-ui/react-dialog";
-import { TimeInput, DatePicker } from "@mantine/dates";
+import { TimeInput, DatePicker, TimeRangeInput } from "@mantine/dates";
 import dayjs from "dayjs";
 import { z } from "zod";
 import { useForm, Controller } from "react-hook-form";

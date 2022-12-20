@@ -48,10 +48,62 @@ export const calculateMoneyPerHour = (start: Date, end: Date, wage: number) => {
   const decimal = Number(toUnits(unit)[0]?.toFixed(2));
   const moneyPerHour = decimal / hoursNumber;
 
-  return moneyPerHour;
+  return `$${moneyPerHour.toFixed(2)}`;
 };
 
 // typed function that takes two date arguments to test if the first date is after the second date
 export const isAfter = (date1: Date, date2: Date) => {
   return dayjs(date1).isAfter(date2);
+};
+
+//function that takes in an array of objects with a date property and money earned property and using dayjs returns a the percentage difference of money earned this week and last week
+
+export const calculateWeeklyMoney = (shifts: Shift[]) => {
+  const thisWeek = shifts.filter((shift) => {
+    return dayjs(shift.date).isSame(dayjs(), "week");
+  });
+
+  const lastWeek = shifts.filter((shift) => {
+    return dayjs(shift.date).isSame(dayjs().subtract(1, "week"), "week");
+  });
+
+  const thisWeekMoney = thisWeek.reduce((acc, shift) => {
+    return acc + shift.earnings;
+  }, 0);
+
+  const lastWeekMoney = lastWeek.reduce((acc, shift) => {
+    return acc + shift.earnings;
+  }, 0);
+
+  const percentageChange =
+    ((thisWeekMoney - lastWeekMoney) / lastWeekMoney) * 100;
+
+  console.log({ thisWeekMoney, lastWeekMoney, percentageChange });
+
+  return { thisWeekMoney, lastWeekMoney, percentageChange };
+};
+
+//function that takes in an array of objects with a date property and money earned property and using dayjs returns a the percentage difference of money earned this month and last month
+
+export const calculateMonthlyMoney = (shifts: Shift[]) => {
+  const thisMonth = shifts.filter((shift) => {
+    return dayjs(shift.date).isSame(dayjs(), "month");
+  });
+
+  const lastMonth = shifts.filter((shift) => {
+    return dayjs(shift.date).isSame(dayjs().subtract(1, "month"), "month");
+  });
+
+  const thisMonthMoney = thisMonth.reduce((acc, shift) => {
+    return acc + shift.earnings;
+  }, 0);
+
+  const lastMonthMoney = lastMonth.reduce((acc, shift) => {
+    return acc + shift.earnings;
+  }, 0);
+
+  const percentageChange =
+    ((thisMonthMoney - lastMonthMoney) / lastMonthMoney) * 100;
+
+  return { thisMonthMoney, lastMonthMoney, percentageChange };
 };

@@ -1,4 +1,7 @@
+import { ArrowPathIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { useState, useRef, useEffect } from "react";
 import type { Shift } from "@prisma/client";
+import { trpc } from "@utils/trpc";
 import { centsToCurrency } from "@utils/vendor/currencyFn";
 import {
   calculateHours,
@@ -7,6 +10,7 @@ import {
   createTimeString,
   orderShiftsByDateDesc,
 } from "@utils/vendor/dateFn";
+import autoAnimate from "@formkit/auto-animate";
 
 interface Props {
   shifts: Shift[] | null | undefined;
@@ -15,6 +19,22 @@ interface Props {
 }
 
 const ShiftTable = ({ shifts, isLoading, error }: Props) => {
+  const parent = useRef(null);
+  const utils = trpc.useContext();
+  const deleteShift = trpc.shift.delete.useMutation({
+    onSuccess: () => {
+      utils.shift.getAll.invalidate();
+    },
+  });
+
+  useEffect(() => {
+    parent.current &&
+      autoAnimate(parent.current, {
+        duration: 500,
+        easing: "ease-in-out",
+      });
+  }, [parent]);
+
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
@@ -26,39 +46,71 @@ const ShiftTable = ({ shifts, isLoading, error }: Props) => {
       </div>
     );
 
+  const handleDelete = async (id: string) => {
+    deleteShift.mutate({ id });
+  };
+
   return (
-    <table className=" w-full table-fixed">
-      <thead className="py-2">
-        <tr className="border-b py-2">
-          <th className="py-4 text-left text-sm">Hours</th>
-          <th className="py-4 text-left text-sm">Hours</th>
-          <th className="py-4 text-left text-sm">Start</th>
-          <th className="py-4 text-left text-sm">End</th>
-          <th className="py-4 text-left text-sm">Date</th>
-          <th className="py-4 text-left text-sm">Earnings</th>
-        </tr>
-      </thead>
-      {shifts && (
-        <tbody className="bg-base-dark-200">
-          {orderShiftsByDateDesc(shifts).map((shift) => (
-            <tr key={shift.id} className="text-sm">
-              <td className="border-b py-3">
-                {calculateHours(shift.start, shift.end)}
-              </td>
-              <td className="border-b py-3">
-                {calculateMoneyPerHour(shift.start, shift.end, shift.earnings)}
-              </td>
-              <td className="border-b py-3">{createTimeString(shift.start)}</td>
-              <td className="border-b py-3">{createTimeString(shift.end)}</td>
-              <td className="border-b py-3">{createDateString(shift.date)}</td>
-              <td className="border-b py-3 font-bold text-primary">
-                {centsToCurrency(shift.earnings)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      )}
-    </table>
+    <div className=" mt-8 rounded-md bg-base-dark-200 p-4 pb-6">
+      <div className="">
+        <h4 className="text-2xl font-bold">Shifts Details</h4>
+      </div>
+      <table className="w-full table-fixed">
+        <thead className="">
+          <tr className="border-b">
+            <th className="text-base-dark-100 whitespace-nowrap py-4 text-left text-sm">
+              Shift hrs
+            </th>
+            <th className="text-base-dark-100 whitespace-nowrap py-4 text-left text-sm">
+              $ per/h
+            </th>
+            <th className="text-base-dark-100 whitespace-nowrap py-4 text-left text-sm">
+              Date
+            </th>
+            <th className="text-base-dark-100 whitespace-nowrap py-4 text-left text-sm">
+              Earnings
+            </th>
+            <th className="text-base-dark-100 whitespace-nowrap py-4 text-left text-sm sm:w-20"></th>
+          </tr>
+        </thead>
+        {shifts && (
+          <tbody className="">
+            {orderShiftsByDateDesc(shifts).map((shift) => (
+              <tr key={shift.id} className="text-sm">
+                <td className="whitespace-nowrap border-b py-4">
+                  {calculateHours(shift.start, shift.end)}
+                </td>
+                <td className="whitespace-nowrap border-b py-4">
+                  {calculateMoneyPerHour(
+                    shift.start,
+                    shift.end,
+                    shift.earnings
+                  )}
+                </td>
+                <td className="whitespace-nowrap border-b py-4">
+                  {createDateString(shift.date)}
+                </td>
+                <td className="whitespace-nowrap border-b py-4 font-bold text-primary">
+                  <span className="rounded-full bg-primary p-1.5 tracking-wider text-primary-dark">
+                    {centsToCurrency(shift.earnings)}
+                  </span>
+                </td>
+                <td className="flex justify-center whitespace-nowrap border-b py-4 font-bold ">
+                  {deleteShift.isLoading ? (
+                    <ArrowPathIcon className="h-5 w-5 animate-spin cursor-not-allowed text-base-light" />
+                  ) : (
+                    <TrashIcon
+                      onClick={() => handleDelete(shift.id)}
+                      className="h-5 w-5 cursor-pointer"
+                    />
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        )}
+      </table>
+    </div>
   );
 };
 

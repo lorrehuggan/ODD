@@ -2,14 +2,14 @@ import { ArrowPathIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useState, useRef, useEffect } from "react";
 import type { Shift } from "@prisma/client";
 import { trpc } from "@utils/trpc";
-import { centsToCurrency } from "@utils/vendor/currencyFn";
 import {
+  centsToCurrency,
   calculateHours,
   calculateMoneyPerHour,
   createDateString,
   createTimeString,
   orderShiftsByDateDesc,
-} from "@utils/vendor/dateFn";
+} from "@utils/vendor";
 import autoAnimate from "@formkit/auto-animate";
 
 interface Props {

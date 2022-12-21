@@ -26,20 +26,6 @@ interface Props {
 type _CreateShiftSchemaType = Omit<CreateShiftSchemaType, "companyID">;
 
 const CreateShift = ({ companyID }: Props) => {
-  return (
-    <div className="dashboard-container">
-      <div className="flex items-center justify-between rounded bg-base-dark-200 p-2">
-        <span className="text-sm">Add Shift</span>
-        <CreateShiftForm companyID={companyID} />
-      </div>
-    </div>
-  );
-  ("");
-};
-
-export default CreateShift;
-
-const CreateShiftForm = ({ companyID }: Props) => {
   const [timeError, setTimeError] = useState<string | null>(null);
   const now = new Date();
   const then = dayjs(now).subtract(8, "hours").toDate();
@@ -238,3 +224,5 @@ const CreateShiftForm = ({ companyID }: Props) => {
     </Dialog.Root>
   );
 };
+
+export default CreateShift;

@@ -1,10 +1,10 @@
 import { useSession } from "next-auth/react";
 import { trpc } from "@utils/trpc";
 import ShiftTable from "../shift/table";
-import CreateShift from "../shift/create";
 import ShiftRoundUp from "../shift/cards/roundup";
 import CollapsibleShifts from "../shift/collapsibleShifts";
 import { orderShiftsByDateDesc } from "@utils/vendor";
+import CreateShiftCard from "../shift/cards/createShift";
 
 interface Props {
   isLoading: boolean;
@@ -18,7 +18,7 @@ const Board = ({ isLoading, companyId }: Props) => {
 
   return (
     <section className="pt-4">
-      <CreateShift companyID={companyId} />
+      <CreateShiftCard companyID={companyId} />
       {allShifts.data && (
         <>
           <ShiftRoundUp

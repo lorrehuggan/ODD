@@ -2,7 +2,7 @@ import MonthlyPercentPill from "@components/dashboard/ui/monthlyPercentPill";
 import WeeklyPercentagePill from "@components/dashboard/ui/weeklyPercentPill";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import type { Shift } from "@prisma/client";
-import { calculateTotalToString, calculateYearlyEarnings } from "@utils/vendor";
+import { calculateYearlyEarnings } from "@utils/vendor";
 
 interface Props {
   shifts: Shift[];
@@ -16,7 +16,7 @@ const ShiftRoundUp = ({ shifts }: Props) => {
     <div className="dashboard-container relative mt-4 flex max-w-full flex-col space-y-4 rounded-md bg-base-dark-200 p-4">
       <div className="flex items-center justify-between">
         <span className="text-sm tracking-wide text-base-dark-400">
-          Total Revenue
+          Year Total
         </span>
         <div className="flex items-center gap-2">
           <WeeklyPercentagePill shifts={shifts} />

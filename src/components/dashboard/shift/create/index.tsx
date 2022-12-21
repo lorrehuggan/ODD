@@ -17,7 +17,7 @@ import type { CreateShiftSchemaType } from "@utils/ZodSchema/shift";
 import { trpc } from "@utils/trpc";
 import { NumberInput } from "@mantine/core";
 import currency from "currency.js";
-import { isAfter } from "@utils/vendor/dateFn";
+import { isAfter } from "@utils/vendor/";
 
 interface Props {
   companyID: string;
@@ -221,7 +221,7 @@ const CreateShiftForm = ({ companyID }: Props) => {
                 </Dialog.Close>
                 <button
                   type="submit"
-                  className="color-trans flex items-center gap-1 rounded bg-primary py-1 px-3 text-sm text-base-light active:bg-primary-dark"
+                  className="color-trans flex items-center gap-1 rounded bg-primary py-1 px-3 text-sm text-primary-dark active:bg-primary-dark"
                 >
                   {createShift.isLoading ? (
                     <ArrowPathIcon className="h-4 w-4 animate-spin" />

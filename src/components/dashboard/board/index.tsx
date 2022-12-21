@@ -4,7 +4,7 @@ import ShiftTable from "../shift/table";
 import CreateShift from "../shift/create";
 import ShiftRoundUp from "../shift/cards/roundup";
 import CollapsibleShifts from "../shift/collapsibleShifts";
-import { orderShiftsByDateDesc } from "@utils/vendor/dateFn";
+import { orderShiftsByDateDesc } from "@utils/vendor";
 
 interface Props {
   isLoading: boolean;

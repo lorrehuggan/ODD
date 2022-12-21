@@ -16,10 +16,11 @@ const CollapsibleShifts = ({ shifts }: Props) => {
     <div className="dashboard-container mt-4">
       <Collapsible.Root open={open} onOpenChange={setOpen}>
         <div className="mb-4 flex justify-between">
-          <p className="text-sm">My Shifts</p>
+          <p className="text-sm uppercase">My Shifts</p>
           <Collapsible.Trigger asChild>
             <button className="rounded-full bg-base-light p-1">
               <ChevronDoubleUpIcon
+                title="Toggle More Shifts"
                 className={clsx(
                   "h-4 w-4 text-base-dark transition-transform duration-200 ease-in-out",
                   {

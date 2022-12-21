@@ -1,6 +1,6 @@
 import type { Shift } from "@prisma/client";
-import { centsToCurrency } from "@utils/vendor/currencyFn";
-import { createDateString, calculateMoneyPerHour } from "@utils/vendor/dateFn";
+import { centsToCurrency } from "@utils/vendor";
+import { createDateString, calculateMoneyPerHour } from "@utils/vendor";
 
 interface Props {
   shift: Shift | undefined;

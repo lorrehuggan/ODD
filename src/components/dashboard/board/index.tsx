@@ -1,8 +1,8 @@
 import { useSession } from "next-auth/react";
 import { trpc } from "@utils/trpc";
-import ShiftTable from "../shift/table";
+import ShiftTable from "../shift/cards/table";
 import ShiftRoundUp from "../shift/cards/roundup";
-import CollapsibleShifts from "../shift/collapsibleShifts";
+import CollapsibleShifts from "../shift/cards/collapsibleShifts";
 import { orderShiftsByDateDesc } from "@utils/vendor";
 import CreateShiftCard from "../shift/cards/createShift";
 

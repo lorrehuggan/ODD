@@ -22,7 +22,7 @@ const StatusBar = () => {
             <UserIcon className="h-6 w-6" />
           </button>
           <button>
-            <BellAlertIcon className="h-6 w-6 text-error" />
+            <BellAlertIcon className="h-6 w-6 text-red-500" />
           </button>
           <button>
             <Bars3Icon className="h-6 w-6" />

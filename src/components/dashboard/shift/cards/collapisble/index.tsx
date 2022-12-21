@@ -13,7 +13,7 @@ interface Props {
 
 const CollapsibleCard = ({ shift }: Props) => {
   return (
-    <div className="mb-4 rounded-md bg-base-dark-200 p-4 shadow-md">
+    <div className=" rounded-md bg-base-dark-200 p-4 shadow-md">
       {shift && (
         <>
           <div className="mb-2 flex items-center justify-between">

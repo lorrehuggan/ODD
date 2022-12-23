@@ -1,17 +1,16 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 import type { Shift } from "@prisma/client";
-import { trpc } from "@utils/trpc";
 import { centsToCurrency } from "@utils/vendor";
-import { createDateString, calculateMoneyPerHour } from "@utils/vendor";
-import * as AlertDialog from "@radix-ui/react-alert-dialog";
-import { useState } from "react";
+import { vendor } from "@utils/vendor";
 import DeleteShift from "../../delete";
 
 interface Props {
   shift: Shift | undefined;
 }
 
-const CollapsibleCard = ({ shift }: Props) => {
+const ShiftCard = ({ shift }: Props) => {
+  const { createDateString, calculateMoneyPerHour } = vendor;
+
   return (
     <div className=" rounded-md bg-base-dark-200 p-4 shadow-md">
       {shift && (
@@ -21,7 +20,9 @@ const CollapsibleCard = ({ shift }: Props) => {
               {createDateString(shift?.date)}
             </span>
             <div className="flex items-center gap-2">
-              <DeleteShift shift={shift} />
+              <DeleteShift shift={shift}>
+                <TrashIcon className="h-4 w-4" />
+              </DeleteShift>
             </div>
           </div>
           <div className="flex flex-col gap-1">
@@ -42,4 +43,4 @@ const CollapsibleCard = ({ shift }: Props) => {
   );
 };
 
-export default CollapsibleCard;
+export default ShiftCard;

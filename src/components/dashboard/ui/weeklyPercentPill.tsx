@@ -12,14 +12,9 @@ const WeeklyPercentagePill = ({ shifts }: Props) => {
     calculateWeeklyEarnings(shifts);
   return (
     <span
-      className={clsx(
-        "flex items-center gap-1 rounded-md px-2 py-1 text-xs font-bold",
-        {
-          "bg-primary-dark text-primary": percentIncreaseThisWeek,
-          "bg-error-dark text-error ": !percentIncreaseThisWeek,
-          "bg-info-dark text-info": percentageChange === "0%",
-        }
-      )}
+      className={
+        "flex items-center gap-1 rounded-md bg-base-dark-300 px-2 py-1 text-xs font-bold text-base-light"
+      }
     >
       <span>W</span>
       <span>{percentageChange}</span>
@@ -27,9 +22,9 @@ const WeeklyPercentagePill = ({ shifts }: Props) => {
         className={clsx(
           "h-3 w-3 transform transition-transform duration-200 ease-in-out",
           {
-            "rotate-180": !percentIncreaseThisWeek,
-            "rotate-0": percentIncreaseThisWeek,
-            "rotate-90": percentageChange === "0%",
+            "rotate-180 text-red-500": !percentIncreaseThisWeek,
+            "rotate-0 text-green-500": percentIncreaseThisWeek,
+            "rotate-90 text-white": percentageChange === "0%",
           }
         )}
       />

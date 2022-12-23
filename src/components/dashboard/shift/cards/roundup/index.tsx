@@ -1,8 +1,7 @@
 import MonthlyPercentPill from "@components/dashboard/ui/monthlyPercentPill";
 import WeeklyPercentagePill from "@components/dashboard/ui/weeklyPercentPill";
-import { TrashIcon } from "@heroicons/react/24/outline";
 import type { Shift } from "@prisma/client";
-import { calculateYearlyEarnings } from "@utils/vendor";
+import { vendor } from "@utils/vendor";
 
 interface Props {
   shifts: Shift[];
@@ -11,12 +10,14 @@ interface Props {
 }
 
 const ShiftRoundUp = ({ shifts }: Props) => {
-  const { thisYearMoney } = calculateYearlyEarnings(shifts);
+  const { thisMonthMoney } = vendor.calculateMonthlyEarnings(shifts);
+  const { percentageChange, percentIncreaseThisMonth } =
+    vendor.calculateMonthlyEarnings(shifts);
   return (
-    <div className="dashboard-container relative mt-4 flex max-w-full flex-col space-y-4 rounded-md bg-base-dark-200 p-4">
+    <div className="dashboard-container relative mt-4 flex max-w-full flex-col space-y-4 rounded-md bg-primary p-4 text-base-dark">
       <div className="flex items-center justify-between">
-        <span className="text-sm tracking-wide text-base-dark-400">
-          Year Total
+        <span className="text-sm font-semibold uppercase tracking-wide text-base-dark-200">
+          This Month
         </span>
         <div className="flex items-center gap-2">
           <WeeklyPercentagePill shifts={shifts} />
@@ -24,7 +25,16 @@ const ShiftRoundUp = ({ shifts }: Props) => {
         </div>
       </div>
       <div>
-        <h4 className="text-3xl font-bold">{thisYearMoney}</h4>
+        <h4 className="text-3xl font-bold text-base-light">{`$${thisMonthMoney.formatted}`}</h4>
+      </div>
+      <div>
+        <p className="text-sm font-semibold text-base-light">
+          {percentIncreaseThisMonth
+            ? `This month you have seen a ${percentageChange} increase in your earnings over last month`
+            : `This month you have seen a ${
+                percentageChange.split("-")[1]
+              } decrease in your earnings last month`}
+        </p>
       </div>
     </div>
   );

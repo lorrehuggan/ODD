@@ -1,10 +1,11 @@
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import StatusBar from "./statusBar";
 import { useSession } from "next-auth/react";
 import { trpc } from "@utils/trpc";
 import CreateCompanyForm from "./createCompany";
 import Board from "./board";
+import useCompany from "@utils/state/company";
 
 interface Props {
   children: React.ReactNode;
@@ -13,6 +14,16 @@ interface Props {
 const Layout = () => {
   const { data: sessionData } = useSession();
   const primaryCompany = trpc.company.getFirstWithShifts.useQuery();
+  const setCompanyName = useCompany((state) => state.setCompanyName);
+  const setCompanyID = useCompany((state) => state.setCompanyID);
+
+  useEffect(() => {
+    if (primaryCompany.data) {
+      setCompanyName(primaryCompany.data.name);
+      setCompanyID(primaryCompany.data.id);
+    }
+  }, [primaryCompany.data, setCompanyName, setCompanyID]);
+
   return (
     <>
       <Head>
@@ -28,10 +39,7 @@ const Layout = () => {
         {!primaryCompany.data ? (
           <CreateCompanyForm isLoading={primaryCompany.isLoading} />
         ) : (
-          <Board
-            companyId={primaryCompany.data.id}
-            isLoading={primaryCompany.isLoading}
-          />
+          <Board isLoading={primaryCompany.isLoading} />
         )}
       </Main>
     </>

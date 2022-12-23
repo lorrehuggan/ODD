@@ -7,9 +7,10 @@ import Button from "@components/ui/button/inde";
 
 interface Props {
   shift: Shift | undefined;
+  children?: React.ReactNode;
 }
 
-const DeleteShift = ({ shift }: Props) => {
+const DeleteShift = ({ shift, children }: Props) => {
   const [open, setOpen] = useState(false);
   const utils = trpc.useContext();
   const deleteShift = trpc.shift.delete.useMutation({
@@ -31,9 +32,7 @@ const DeleteShift = ({ shift }: Props) => {
       }}
     >
       <AlertDialog.Trigger asChild>
-        <button className="rounded-md bg-base-dark-300 p-1">
-          <TrashIcon className="h-4 w-4 text-base-light" />
-        </button>
+        <Button theme="base-dark">{children}</Button>
       </AlertDialog.Trigger>
       <AlertDialog.Portal>
         <AlertDialog.Overlay className="fixed inset-0 animate-fade bg-base-dark/60 backdrop-blur-sm" />

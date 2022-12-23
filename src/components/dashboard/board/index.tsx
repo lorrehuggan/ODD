@@ -1,24 +1,23 @@
 import { useSession } from "next-auth/react";
 import { trpc } from "@utils/trpc";
-import ShiftTable from "../shift/cards/table";
 import ShiftRoundUp from "../shift/cards/roundup";
-import CollapsibleShifts from "../shift/cards/collapsibleShifts";
+import AllShifts from "../shift/cards/shifts";
 import { orderShiftsByDateDesc } from "@utils/vendor";
 import CreateShiftCard from "../shift/cards/createShift";
+import useCompany from "@utils/state/company";
 
 interface Props {
   isLoading: boolean;
-  companyId: string;
 }
-const Board = ({ isLoading, companyId }: Props) => {
+const Board = ({ isLoading }: Props) => {
   const { data: sessionData } = useSession();
-  const allShifts = trpc.shift.getAll.useQuery({ companyId });
+  const companyID = useCompany((state) => state.companyID);
+  const allShifts = trpc.shift.getAll.useQuery({ companyId: companyID });
 
   if (isLoading) return <p>Loading...</p>;
 
   return (
     <section className="pt-4">
-      <CreateShiftCard companyID={companyId} />
       {allShifts.data && (
         <>
           <ShiftRoundUp
@@ -26,16 +25,9 @@ const Board = ({ isLoading, companyId }: Props) => {
             isLoading={allShifts.isLoading}
             error={allShifts.error?.message}
           />
-          <CollapsibleShifts shifts={allShifts.data} />
+          <AllShifts shifts={allShifts.data} />
         </>
       )}
-      {/* <div className="dashboard-container">
-        <ShiftTable
-          shifts={allShifts.data}
-          isLoading={allShifts.isLoading}
-          error={allShifts.error?.message}
-        />
-      </div> */}
     </section>
   );
 };

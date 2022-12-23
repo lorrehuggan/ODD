@@ -2,6 +2,7 @@ import clsx from "clsx";
 import React from "react";
 
 interface Props {
+  type?: "button" | "submit" | "reset";
   children: React.ReactNode;
   className?: string;
   theme:
@@ -17,6 +18,7 @@ interface Props {
   size?: "sm" | "md" | "lg";
   outline?: boolean;
   onClick?: () => void | Promise<void> | Promise<any>;
+  disabled?: boolean;
 }
 
 // return button component using props and clsx to add tailwind classes
@@ -27,12 +29,16 @@ const Button = ({
   size,
   outline,
   onClick,
+  type,
+  disabled,
 }: Props) => {
   return (
     <button
+      disabled={disabled || false}
+      type={type || "button"}
       onClick={onClick}
       className={clsx(
-        `${className} rounded-md px-2 py-1 text-sm transition-colors duration-200 ease-in-out`,
+        `${className} flex items-center gap-1 rounded-md px-2 py-1 text-sm transition-colors duration-200 ease-in-out`,
         {
           "bg-base-light text-base-dark hover:bg-base-dark hover:text-base-light":
             theme === "base-light",

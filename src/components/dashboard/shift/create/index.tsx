@@ -18,14 +18,17 @@ import { trpc } from "@utils/trpc";
 import { NumberInput } from "@mantine/core";
 import currency from "currency.js";
 import { isAfter } from "@utils/vendor/";
+import Button from "@components/ui/button/inde";
+import useCompany from "@utils/state/company";
 
 interface Props {
-  companyID: string;
+  children: React.ReactNode;
 }
 
 type _CreateShiftSchemaType = Omit<CreateShiftSchemaType, "companyID">;
 
-const CreateShift = ({ companyID }: Props) => {
+const CreateShift = ({ children }: Props) => {
+  const companyID = useCompany((state) => state.companyID);
   const [timeError, setTimeError] = useState<string | null>(null);
   const now = new Date();
   const then = dayjs(now).subtract(8, "hours").toDate();
@@ -92,17 +95,17 @@ const CreateShift = ({ companyID }: Props) => {
       }}
     >
       <Dialog.Trigger asChild>
-        <button className="flex items-center">
-          <PlusIcon className="h-5 w-5" />
-        </button>
+        <Button theme="base-dark" className="flex items-center">
+          {children}
+        </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 animate-fade bg-base-dark/60 backdrop-blur-sm" />
-        <Dialog.Content className="dashboard-container fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 transform animate-fade rounded bg-base-light p-4 text-base-dark-300 shadow-md">
+        <Dialog.Content className="dashboard-container fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 transform animate-fade rounded bg-base-dark-200 p-4 text-base-light shadow-md">
           <Dialog.Title asChild>
             <h4 className="font text-lg font-bold">Create New Shift</h4>
           </Dialog.Title>
-          <Dialog.Description asChild className="mb-4 text-base-dark-400">
+          <Dialog.Description asChild className="mb-8 text-neutral-400">
             <p className="text-sm">Enter details to create new shift</p>
           </Dialog.Description>
           <Dialog.Close asChild>
@@ -132,6 +135,13 @@ const CreateShift = ({ companyID }: Props) => {
                       onChange={onChange}
                       onBlur={onBlur}
                       value={value}
+                      styles={{
+                        input: {
+                          backgroundColor: "#3f3f46",
+                          border: "1px solid #737373",
+                          color: "#fafafa",
+                        },
+                      }}
                     />
                   )}
                 />
@@ -145,6 +155,13 @@ const CreateShift = ({ companyID }: Props) => {
                       onChange={onChange}
                       onBlur={onBlur}
                       value={value}
+                      styles={{
+                        input: {
+                          backgroundColor: "#3f3f46",
+                          border: "1px solid #737373",
+                          color: "#fafafa",
+                        },
+                      }}
                     />
                   )}
                 />
@@ -170,6 +187,13 @@ const CreateShift = ({ companyID }: Props) => {
                     onChange={onChange}
                     onBlur={onBlur}
                     value={value}
+                    styles={{
+                      input: {
+                        backgroundColor: "#3f3f46",
+                        border: "1px solid #737373",
+                        color: "#fafafa",
+                      },
+                    }}
                   />
                 )}
               />
@@ -194,28 +218,33 @@ const CreateShift = ({ companyID }: Props) => {
                     stepHoldInterval={100}
                     min={0.25}
                     max={100000}
+                    styles={{
+                      input: {
+                        backgroundColor: "#3f3f46",
+                        border: "1px solid #737373",
+                        color: "#fafafa",
+                      },
+                      control: {
+                        border: "1px solid #3f3f46",
+                      },
+                    }}
                   />
                 )}
               />
             </fieldset>
-            <div className="flex items-center justify-end gap-2 pt-8">
+            <div className="flex items-center justify-end gap-2 pt-16">
               <div className="flex w-full justify-end gap-2">
                 <Dialog.Close asChild>
-                  <button className="color-trans rounded py-1 px-3 text-sm text-base-dark-400 active:bg-base-dark-400 active:text-white">
-                    Cancel
-                  </button>
+                  <Button theme="base-neutral">Cancel</Button>
                 </Dialog.Close>
-                <button
-                  type="submit"
-                  className="color-trans flex items-center gap-1 rounded bg-primary py-1 px-3 text-sm text-primary-dark active:bg-primary-dark"
-                >
+                <Button type="submit" theme="primary">
                   {createShift.isLoading ? (
                     <ArrowPathIcon className="h-4 w-4 animate-spin" />
                   ) : (
                     <PlusIcon className="h-4 w-4" />
                   )}
                   Add Shift
-                </button>
+                </Button>
               </div>
             </div>
           </form>

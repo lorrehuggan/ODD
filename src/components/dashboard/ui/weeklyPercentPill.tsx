@@ -13,17 +13,23 @@ const WeeklyPercentagePill = ({ shifts }: Props) => {
   return (
     <span
       className={
-        "flex items-center gap-1 rounded-md bg-base-dark-300 px-2 py-1 text-xs font-bold text-base-light"
+        "flex items-center gap-1 rounded-md bg-base-dark px-2 py-1 text-xs font-bold text-base-light"
       }
     >
-      <span>W</span>
-      <span>{percentageChange}</span>
+      <span
+        className={clsx("", {
+          "text-red-500": !percentIncreaseThisWeek,
+          "text-green-500": percentIncreaseThisWeek,
+        })}
+      >
+        {percentageChange}
+      </span>
       <ArrowSmallUpIcon
         className={clsx(
-          "h-3 w-3 transform transition-transform duration-200 ease-in-out",
+          "h-3.5 w-3.5 transform transition-transform duration-200 ease-in-out",
           {
-            "rotate-180 text-red-500": !percentIncreaseThisWeek,
-            "rotate-0 text-green-500": percentIncreaseThisWeek,
+            "rotate-[135deg] text-red-500": !percentIncreaseThisWeek,
+            "rotate-45 text-green-500": percentIncreaseThisWeek,
             "rotate-90 text-white": percentageChange === "0%",
           }
         )}

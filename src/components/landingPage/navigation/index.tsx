@@ -1,23 +1,34 @@
 import React from "react";
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react";
+import Button from "@components/ui/button/inde";
 
 const Navigation = () => {
   return (
     <nav className="flex items-center py-6">
-      <div className="landing-container flex justify-between relative bg-base-dark-200 p-4 rounded-full shadow-xl">
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 uppercase text-sm text-primary">Public Beta</div>
-        <h1 className="font-black font-mono italic text-2xl">ODD</h1>
-        <ul className='flex gap-3 items-center'>
+      <div className="landing-container relative flex justify-between rounded-md bg-base-dark-200 p-4 shadow-xl">
+        <div className="absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 transform text-sm uppercase text-primary sm:block">
+          Public Beta
+        </div>
+        <h1 className="font-mono text-2xl font-black italic">ODD</h1>
+        <ul className="flex items-center gap-3">
           <li>
-            <button onClick={() => signIn()} className="p-1 text-sm cursor-pointer hover:text-primary transition-colors duration-300 ease-in-out">Sign In</button>
+            <Button
+              theme="base-dark"
+              onClick={() => signIn()}
+              className="cursor-pointer bg-base-dark-200 p-1 text-sm transition-colors duration-300 ease-in-out hover:text-primary"
+            >
+              Sign In
+            </Button>
           </li>
           <li>
-            <a className='p-2 bg-primary text-sm rounded-full hover:bg-primary-dark transition-colors duration-300 ease-in-out cursor-pointer'>Get Started</a>
+            <a className="cursor-pointer rounded-md bg-primary-dark p-2 text-sm transition-colors duration-300 ease-in-out hover:bg-primary">
+              Get Started
+            </a>
           </li>
         </ul>
       </div>
     </nav>
   );
-}
+};
 
 export default Navigation;

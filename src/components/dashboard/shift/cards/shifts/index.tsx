@@ -23,7 +23,7 @@ const AllShifts = ({ shifts }: Props) => {
         onOpenChange={setOpen}
         className="rounded-md bg-base-dark-200"
       >
-        <div className="flex justify-between  p-4">
+        <div className="flex justify-between p-4 pb-0">
           <div className="flex w-full justify-between border-b border-b-base-light/20 pb-4">
             <p className="text-sm font-semibold uppercase">{`${companyName} Shifts`}</p>
             <div className="flex items-center gap-2">

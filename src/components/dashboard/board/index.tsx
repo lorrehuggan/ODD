@@ -1,10 +1,11 @@
 import { useSession } from "next-auth/react";
 import { trpc } from "@utils/trpc";
-import ShiftRoundUp from "../shift/cards/roundup";
+import MonthlyRoundUp from "../shift/cards/roundup/month";
 import AllShifts from "../shift/cards/shifts";
 import { orderShiftsByDateDesc } from "@utils/vendor";
 import CreateShiftCard from "../shift/cards/createShift";
 import useCompany from "@utils/state/company";
+import WeeklyRoundUp from "../shift/cards/roundup/weekly";
 
 interface Props {
   isLoading: boolean;
@@ -20,7 +21,12 @@ const Board = ({ isLoading }: Props) => {
     <section className="pt-4">
       {allShifts.data && (
         <>
-          <ShiftRoundUp
+          <MonthlyRoundUp
+            shifts={orderShiftsByDateDesc(allShifts.data)}
+            isLoading={allShifts.isLoading}
+            error={allShifts.error?.message}
+          />
+          <WeeklyRoundUp
             shifts={orderShiftsByDateDesc(allShifts.data)}
             isLoading={allShifts.isLoading}
             error={allShifts.error?.message}

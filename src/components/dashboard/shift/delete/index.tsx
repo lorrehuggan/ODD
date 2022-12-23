@@ -1,4 +1,8 @@
-import { TrashIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowPathIcon,
+  MinusIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import type { Shift } from "@prisma/client";
 import { trpc } from "@utils/trpc";
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
@@ -49,7 +53,14 @@ const DeleteShift = ({ shift, children }: Props) => {
             <AlertDialog.Cancel asChild>
               <Button theme="base-neutral">Cancel</Button>
             </AlertDialog.Cancel>
-            <Button onClick={handleDelete} theme="primary">
+            <Button
+              disabled={deleteShift.isLoading}
+              onClick={handleDelete}
+              theme="primary"
+            >
+              {deleteShift.isLoading ? (
+                <ArrowPathIcon className="h-4 w-4 animate-spin" />
+              ) : null}
               Confirm
             </Button>
           </div>

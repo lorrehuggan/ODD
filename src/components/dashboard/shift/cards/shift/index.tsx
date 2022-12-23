@@ -12,7 +12,7 @@ const ShiftCard = ({ shift }: Props) => {
   const { createDateString, calculateMoneyPerHour } = vendor;
 
   return (
-    <div className=" rounded-md bg-base-dark-200 p-4 shadow-md">
+    <div className=" relative rounded-md bg-base-dark-200 p-4 ">
       {shift && (
         <>
           <div className="mb-2 flex items-center justify-between">

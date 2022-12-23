@@ -4,6 +4,10 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      boxShadow: {
+        outline:
+          "0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);",
+      },
       colors: {
         "primary-light": "#a7f3d0",
         primary: "#34d399",
@@ -26,7 +30,7 @@ module.exports = {
         "info-dark": "#0c4a6e",
       },
       fontFamily: {
-        sans: ["Inter Tight", ...defaultTheme.fontFamily.sans],
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         // opacity fade animation

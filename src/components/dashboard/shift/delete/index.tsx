@@ -45,11 +45,11 @@ const DeleteShift = ({ shift, children }: Props) => {
             {" "}
             Are you sure you want to delete this shift?
           </AlertDialog.Title>
-          <AlertDialog.Description className="mt-2 text-sm text-neutral-400">
+          <AlertDialog.Description className="my-8 text-sm text-neutral-400">
             This action cannot be undone. This will permanently delete the
             record of this shift from our database.
           </AlertDialog.Description>
-          <div className="mt-8 flex items-center justify-end gap-2">
+          <div className=" flex items-center justify-end gap-2">
             <AlertDialog.Cancel asChild>
               <Button theme="base-neutral">Cancel</Button>
             </AlertDialog.Cancel>

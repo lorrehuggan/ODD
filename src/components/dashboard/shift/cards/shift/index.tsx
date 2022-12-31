@@ -6,13 +6,15 @@ import DeleteShift from "../../delete";
 
 interface Props {
   shift: Shift | undefined;
+  mostRecent?: boolean;
 }
 
-const ShiftCard = ({ shift }: Props) => {
+const ShiftCard = ({ shift, mostRecent }: Props) => {
   const { createDateString, calculateMoneyPerHour } = vendor;
 
   return (
-    <div className=" relative rounded-md bg-base-dark-200 p-4 ">
+    <div className=" relative bg-base-dark-200 p-4 ">
+      <div className=" absolute top-0 left-1/2 h-[1px] w-[90%] -translate-x-1/2 bg-base-dark-300"></div>
       {shift && (
         <>
           <div className="mb-2 flex items-center justify-between">
@@ -29,13 +31,20 @@ const ShiftCard = ({ shift }: Props) => {
             <span className="text-2xl font-bold">
               {centsToCurrency(shift.earnings)}
             </span>
-            <span className=" text-sm tracking-wide text-secondary">
-              {`${calculateMoneyPerHour(
-                shift.start,
-                shift.end,
-                shift.earnings
-              )} p/h`}
-            </span>
+            <div className="flex items-center justify-between">
+              <span className=" text-sm tracking-wide text-secondary">
+                {`${calculateMoneyPerHour(
+                  shift.start,
+                  shift.end,
+                  shift.earnings
+                )} p/h`}
+              </span>
+              {mostRecent && (
+                <span className="text-xs uppercase tracking-widest text-base-dark-400">
+                  Most Recent Shift
+                </span>
+              )}
+            </div>
           </div>
         </>
       )}

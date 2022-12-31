@@ -21,6 +21,7 @@ const Board = ({ isLoading }: Props) => {
     <section className="pt-4">
       {allShifts.data && (
         <>
+          <AllShifts shifts={allShifts.data} />
           <MonthlyRoundUp
             shifts={orderShiftsByDateDesc(allShifts.data)}
             isLoading={allShifts.isLoading}
@@ -31,7 +32,6 @@ const Board = ({ isLoading }: Props) => {
             isLoading={allShifts.isLoading}
             error={allShifts.error?.message}
           />
-          <AllShifts shifts={allShifts.data} />
         </>
       )}
     </section>

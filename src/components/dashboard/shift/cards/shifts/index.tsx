@@ -24,7 +24,7 @@ const AllShifts = ({ shifts }: Props) => {
         className="rounded-md bg-base-dark-200"
       >
         <div className="flex justify-between p-4 pb-0">
-          <div className="flex w-full justify-between border-b border-b-base-light/20 pb-4">
+          <div className="flex w-full justify-between pb-4">
             <p className="text-sm font-semibold uppercase">{`${companyName} Shifts`}</p>
             <div className="flex items-center gap-2">
               <Collapsible.Trigger asChild>
@@ -47,7 +47,7 @@ const AllShifts = ({ shifts }: Props) => {
             </div>
           </div>
         </div>
-        <ShiftCard shift={shifts[0]} />
+        <ShiftCard shift={shifts[0]} mostRecent />
         <Collapsible.Content className="CollapsibleContent">
           {shifts.slice(1).map((shift) => {
             return <ShiftCard key={shift.id} shift={shift} />;

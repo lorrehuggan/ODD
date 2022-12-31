@@ -1,6 +1,6 @@
 import WeeklyPercentagePill from "@components/dashboard/ui/weeklyPercentPill";
 import Button from "@components/ui/button/inde";
-import { Bars3Icon } from "@heroicons/react/24/outline";
+import { Bars2Icon, Bars3Icon } from "@heroicons/react/24/outline";
 import type { Shift } from "@prisma/client";
 import { vendor } from "@utils/vendor";
 
@@ -23,7 +23,7 @@ const WeeklyRoundUp = ({ shifts }: Props) => {
         <div className="flex items-center gap-2">
           <WeeklyPercentagePill shifts={shifts} />
           <Button theme="base-dark">
-            <Bars3Icon className="h-4 w-4" />
+            <Bars2Icon className="h-4 w-4" />
           </Button>
         </div>
       </div>
@@ -38,8 +38,8 @@ const WeeklyRoundUp = ({ shifts }: Props) => {
         ) : (
           <p className="text-sm font-semibold text-base-light">
             {percentIncreaseThisWeek
-              ? `This month you have seen a ${percentageChange} increase in your earnings compared to last week`
-              : `This month you have seen a ${
+              ? `This week you have seen a ${percentageChange} increase in your earnings compared to last week`
+              : `This week you have seen a ${
                   percentageChange.split("-")[1]
                 } decrease in your earnings compared to last week`}
           </p>

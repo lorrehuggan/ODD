@@ -1,6 +1,6 @@
 import MonthlyPercentPill from "@components/dashboard/ui/monthlyPercentPill";
 import Button from "@components/ui/button/inde";
-import { Bars3Icon, PlusIcon } from "@heroicons/react/24/outline";
+import { Bars2Icon, Bars3Icon, PlusIcon } from "@heroicons/react/24/outline";
 import type { Shift } from "@prisma/client";
 import { vendor } from "@utils/vendor";
 
@@ -23,7 +23,7 @@ const MonthlyRoundUp = ({ shifts }: Props) => {
         <div className="flex items-center gap-2">
           <MonthlyPercentPill shifts={shifts} />
           <Button theme="base-dark">
-            <Bars3Icon className="h-4 w-4" />
+            <Bars2Icon className="h-4 w-4" />
           </Button>
         </div>
       </div>
